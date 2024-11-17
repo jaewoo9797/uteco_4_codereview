@@ -1,6 +1,9 @@
 package store.domain;
 
+import store.common.ErrorMessage;
+
 public class QuantityCounter {
+
     private int promotionQuantity;
     private int nonPromotionQuantity;
 
@@ -25,7 +28,16 @@ public class QuantityCounter {
 
     public void inspectionOrderCount(int quantity) {
         if (promotionQuantity + nonPromotionQuantity < quantity) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(
+                    ErrorMessage.INSUFFICIENT_INVENTORY_NUMBER_PURCHASED.getMessage());
         }
+    }
+
+    public int getPromotionQuantity() {
+        return promotionQuantity;
+    }
+
+    public int getNonPromotionQuantity() {
+        return nonPromotionQuantity;
     }
 }
