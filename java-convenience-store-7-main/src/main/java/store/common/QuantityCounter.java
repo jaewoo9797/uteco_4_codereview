@@ -9,6 +9,10 @@ public class QuantityCounter {
         this.quantity = quantity;
     }
 
+    public void increaseQuantity(int quantity) {
+        this.quantity += quantity;
+    }
+
     public void decreaseQuantity(int quantity) {
         if (this.quantity < quantity) {
             throw new IllegalArgumentException(ErrorMessage.QUANTITY_IS_LESS_THEN_ZERO.getMessage());

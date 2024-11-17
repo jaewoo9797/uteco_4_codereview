@@ -13,11 +13,13 @@ public class Quantity {
         this.nonPromotionQuantity = nonPromotionQuantity;
     }
 
-    public Quantity(QuantityCounter promotionQuantity) {
-        this.promotionQuantity = promotionQuantity;
-        this.nonPromotionQuantity = new QuantityCounter(0);
+    public Quantity(QuantityCounter nonPromotionQuantity) {
+        this(null, nonPromotionQuantity);
     }
 
+    public void addNonPromotionQuantity(QuantityCounter quantity) {
+        nonPromotionQuantity.increaseQuantity(quantity.getQuantity());
+    }
 
     public void reduceOrderQuantity(int orderQuantity) {
         inspectionOrderCount(orderQuantity);
