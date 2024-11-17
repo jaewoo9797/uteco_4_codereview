@@ -1,4 +1,4 @@
-package store.domain;
+package store.domain.product;
 
 import static org.junit.jupiter.api.Assertions.*;
 

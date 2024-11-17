@@ -1,4 +1,4 @@
-package store.domain;
+package store.domain.product;
 
 import store.common.ErrorMessage;
 import store.common.QuantityCounter;
