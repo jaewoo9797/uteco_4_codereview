@@ -28,6 +28,6 @@ public class PromotionTypeInfo {
     }
 
     public boolean calculateNumberOfEventProductQuantity(int orderCount) {
-        return promotionCalculator.inspectionNumberOfEventProduct(orderCount, buy, get);
+        return promotionCalculator.inspectionAdditionalNumberOfEventProductForFree(orderCount, buy, get);
     }
 }

@@ -4,5 +4,5 @@ public interface PromotionCalculator {
 
     int calculateNumberOfEventProductQuantity(int orderCount, int buy, int get);
 
-    boolean inspectionNumberOfEventProduct(int orderCount, int buy, int get);
+    boolean inspectionAdditionalNumberOfEventProductForFree(int orderCount, int buy, int get);
 }
