@@ -7,7 +7,7 @@ public class NonPromotionCalculator implements PromotionCalculator {
     }
 
     @Override
-    public boolean inspectionNumberOfEventProduct(int orderCount, int buy, int get) {
+    public boolean inspectionAdditionalNumberOfEventProductForFree(int orderCount, int buy, int get) {
         return false;
     }
 }
