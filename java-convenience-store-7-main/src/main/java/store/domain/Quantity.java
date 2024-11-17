@@ -14,7 +14,7 @@ public class Quantity {
     }
 
     public Quantity(QuantityCounter nonPromotionQuantity) {
-        this(null, nonPromotionQuantity);
+        this(new QuantityCounter(0), nonPromotionQuantity);
     }
 
     public void addNonPromotionQuantity(QuantityCounter quantity) {
@@ -41,5 +41,13 @@ public class Quantity {
 
     private int totalProductQuantity() {
         return promotionQuantity.getQuantity() + nonPromotionQuantity.getQuantity();
+    }
+
+    public int getPromotionQuantity() {
+        return promotionQuantity.getQuantity();
+    }
+
+    public int getNonPromotionQuantity() {
+        return nonPromotionQuantity.getQuantity();
     }
 }

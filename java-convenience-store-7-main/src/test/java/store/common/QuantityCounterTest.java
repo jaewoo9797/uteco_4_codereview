@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class QuantityTest {
+class QuantityCounterTest {
 
     @ParameterizedTest(name = "재고 {0}개")
     @ValueSource(ints = {0, 1, 2})
@@ -57,5 +57,21 @@ class QuantityTest {
 
         // when, then
         assertThrows(IllegalArgumentException.class, () -> quantityCounter.decreaseQuantity(decreaseQuantity));
+    }
+
+    @Test
+    @DisplayName("재고생성_재고수량증가_추가된재고만큼수량동일")
+    void givenCreateQuantity_whenIncreaseQuantity_thenCorrectQuantity() {
+        //given
+        int quantity = 10;
+        int increaseQuantity = 10;
+        QuantityCounter quantityCounter = new QuantityCounter(quantity);
+
+        //when
+        quantityCounter.increaseQuantity(increaseQuantity);
+
+        //then
+        int resultQuantity = quantity + increaseQuantity;
+        assertEquals(resultQuantity, quantityCounter.getQuantity());
     }
 }
