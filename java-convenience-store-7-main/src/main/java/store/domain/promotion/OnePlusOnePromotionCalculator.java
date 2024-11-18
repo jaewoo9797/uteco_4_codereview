@@ -8,7 +8,7 @@ public class OnePlusOnePromotionCalculator implements PromotionCalculator {
 
     @Override
     public boolean inspectionAdditionalNumberOfEventProductForFree(int orderCount, int buy, int get) {
-        return orderCount % (buy + get) == 1;
+        return orderCount % (buy + get) == buy;
     }
 
 }
