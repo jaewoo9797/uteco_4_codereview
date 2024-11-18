@@ -9,8 +9,8 @@ public class QuantityCounter {
         this.quantity = quantity;
     }
 
-    public void increaseQuantity(int quantity) {
-        this.quantity += quantity;
+    public void increaseQuantity(QuantityCounter quantity) {
+        this.quantity += quantity.getQuantity();
     }
 
     public void decreaseQuantity(int quantity) {
@@ -30,4 +30,14 @@ public class QuantityCounter {
         }
     }
 
+    public int calculatePlusQuantityCount(QuantityCounter quantityCounter) {
+        return this.quantity + quantityCounter.getQuantity();
+    }
+
+    public int calculateMinusQuantityCount(QuantityCounter quantityCounter) {
+        if (this.quantity <  quantityCounter.getQuantity()) {
+            throw new IllegalArgumentException(ErrorMessage.QUANTITY_IS_LESS_THEN_ZERO.getMessage());
+        }
+        return this.quantity - quantityCounter.getQuantity();
+    }
 }

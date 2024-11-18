@@ -18,29 +18,29 @@ public class Quantity {
     }
 
     public void addNonPromotionQuantity(QuantityCounter quantity) {
-        nonPromotionQuantity.increaseQuantity(quantity.getQuantity());
+        nonPromotionQuantity.increaseQuantity(quantity);
     }
 
-    public void reduceOrderQuantity(int orderQuantity) {
+    public void reduceOrderQuantity(QuantityCounter orderQuantity) {
         inspectionOrderCount(orderQuantity);
-        if (orderQuantity > promotionQuantity.getQuantity()) {
-            int remainOrderQuantity = orderQuantity - promotionQuantity.getQuantity();
+        if (orderQuantity.getQuantity() > promotionQuantity.getQuantity()) {
+            int remainOrderQuantity = orderQuantity.calculateMinusQuantityCount(promotionQuantity);
             promotionQuantity.decreaseQuantity(promotionQuantity.getQuantity());
             nonPromotionQuantity.decreaseQuantity(remainOrderQuantity);
             return;
         }
-        promotionQuantity.decreaseQuantity(orderQuantity);
+        promotionQuantity.decreaseQuantity(orderQuantity.getQuantity());
     }
 
-    public void inspectionOrderCount(int quantity) {
-        if (totalProductQuantity() < quantity) {
+    public void inspectionOrderCount(QuantityCounter quantity) {
+        if (totalProductQuantity() < quantity.getQuantity()) {
             throw new IllegalArgumentException(
                     ErrorMessage.INSUFFICIENT_INVENTORY_NUMBER_PURCHASED.getMessage());
         }
     }
 
     private int totalProductQuantity() {
-        return promotionQuantity.getQuantity() + nonPromotionQuantity.getQuantity();
+        return promotionQuantity.calculatePlusQuantityCount(nonPromotionQuantity);
     }
 
     public int getPromotionQuantity() {
