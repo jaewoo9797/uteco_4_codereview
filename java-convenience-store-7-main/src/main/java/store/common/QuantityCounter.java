@@ -40,4 +40,8 @@ public class QuantityCounter {
         }
         return this.quantity - quantityCounter.getQuantity();
     }
+
+    public boolean checkQuantityMoreThan(QuantityCounter quantityCounter) {
+        return this.quantity >= quantityCounter.getQuantity();
+    }
 }

@@ -33,18 +33,26 @@ public class Quantity {
     }
 
     public void inspectionOrderCount(QuantityCounter quantity) {
-        if (totalProductQuantity() < quantity.getQuantity()) {
+        if (getTotalProductQuantity() < quantity.getQuantity()) {
             throw new IllegalArgumentException(
                     ErrorMessage.INSUFFICIENT_INVENTORY_NUMBER_PURCHASED.getMessage());
         }
     }
 
-    private int totalProductQuantity() {
+    public int getTotalProductQuantity() {
         return promotionQuantity.calculatePlusQuantityCount(nonPromotionQuantity);
+    }
+
+    public boolean checkPromotionQuantityCanProcess(QuantityCounter orderQuantity) {
+        return promotionQuantity.checkQuantityMoreThan(orderQuantity);
     }
 
     public int getPromotionQuantity() {
         return promotionQuantity.getQuantity();
+    }
+
+    public QuantityCounter getPromotionQuantityCounter() {
+        return promotionQuantity;
     }
 
     public int getNonPromotionQuantity() {

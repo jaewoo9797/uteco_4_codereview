@@ -38,4 +38,8 @@ public class PromotionTypeInfo {
     public String getName() {
         return name;
     }
+
+    public int getPromotionBuyGet() {
+        return buy.calculatePlusQuantityCount(get);
+    }
 }

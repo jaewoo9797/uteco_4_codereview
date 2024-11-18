@@ -23,4 +23,8 @@ public class PromotionType {
     public boolean inspectionCanGetAdditionalPromotionProduct(QuantityCounter orderCount) {
         return promotionTypeInfo.inspectAdditionalNumberOfEventProductFroFree(orderCount);
     }
+
+    public int getPromotionBuyGet() {
+        return promotionTypeInfo.getPromotionBuyGet();
+    }
 }
