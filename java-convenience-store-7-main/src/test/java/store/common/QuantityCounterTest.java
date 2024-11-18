@@ -64,14 +64,53 @@ class QuantityCounterTest {
     void givenCreateQuantity_whenIncreaseQuantity_thenCorrectQuantity() {
         //given
         int quantity = 10;
-        int increaseQuantity = 10;
+        QuantityCounter increaseQuantity = new QuantityCounter(10);
         QuantityCounter quantityCounter = new QuantityCounter(quantity);
 
         //when
         quantityCounter.increaseQuantity(increaseQuantity);
 
         //then
-        int resultQuantity = quantity + increaseQuantity;
+        int resultQuantity = quantity + increaseQuantity.getQuantity();
         assertEquals(resultQuantity, quantityCounter.getQuantity());
+    }
+
+    @ParameterizedTest(name = "재고 10개와 재고 {0}개 : 재고의 합 계산")
+    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8})
+    @DisplayName("기존 재고의 개수와 특정 개수의 합을 계산")
+    void givenCreateQuantityCounter_whenPlusQuantityCounter_thenCorrectResultQuantityCounter(int givenQuantity) {
+        //given
+        int initialQuantity = 10;
+        QuantityCounter quantityCounter = new QuantityCounter(initialQuantity);
+        QuantityCounter plusQuantityCounter = new QuantityCounter(givenQuantity);
+
+        //when, then
+        assertEquals(initialQuantity + givenQuantity, quantityCounter.calculatePlusQuantityCount(plusQuantityCounter));
+    }
+
+    @ParameterizedTest(name = "재고 10개와 재고 {0}개 : 재고의 차 계산")
+    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+    @DisplayName("기존 재고의 개수와 특정 개수의 차를 계산")
+    void givenCreateQuantityCounter_whenMinusQuantityCounter_thenCorrectResultQuantityCounter(int givenQuantity) {
+        //given
+        int initialQuantity = 10;
+        QuantityCounter quantityCounter = new QuantityCounter(initialQuantity);
+        QuantityCounter minusQuantityCounter = new QuantityCounter(givenQuantity);
+
+        //when, then
+        assertEquals(initialQuantity - givenQuantity, quantityCounter.calculateMinusQuantityCount(minusQuantityCounter));
+    }
+
+    @ParameterizedTest(name = "재고 5개와 재고 {0}개와 기존 재고의 차")
+    @ValueSource(ints = {6, 7, 8, 9, 10})
+    @DisplayName("기존 재고의 개수와 특정 개수의 차를 계산")
+    void givenCreateQuantityCounter_whenMoreThanMinusQuantityCounter_thenThrowError(int givenQuantity) {
+        //given
+        int initialQuantity = 5;
+        QuantityCounter quantityCounter = new QuantityCounter(initialQuantity);
+        QuantityCounter minusQuantityCounter = new QuantityCounter(givenQuantity);
+
+        //when, then
+        assertThrows(IllegalArgumentException.class, () -> quantityCounter.calculateMinusQuantityCount(minusQuantityCounter));
     }
 }

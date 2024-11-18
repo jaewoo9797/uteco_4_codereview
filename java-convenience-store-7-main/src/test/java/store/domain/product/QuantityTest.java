@@ -58,8 +58,8 @@ class QuantityTest {
     @DisplayName("프로모션 재고 감소 테스트")
     void shouldReducePromotionQuantity(int decreaseQuantity) {
         int initialPromotionQuantity = quantity.getPromotionQuantity();
-
-        quantity.reduceOrderQuantity(decreaseQuantity);
+        QuantityCounter reduceQuantityCounter = new QuantityCounter(decreaseQuantity);
+        quantity.reduceOrderQuantity(reduceQuantityCounter);
 
         assertEquals(initialPromotionQuantity - decreaseQuantity, quantity.getPromotionQuantity(),
                 "프로모션 재고가 올바르게 감소하지 않았습니다.");
@@ -72,9 +72,10 @@ class QuantityTest {
         //given
         int initialPromotionQuantity = quantity.getPromotionQuantity();
         int initialNonPromotionQuantity = quantity.getNonPromotionQuantity();
+        QuantityCounter reduceQuantityCounter = new QuantityCounter(decreaseQuantity);
 
         //when
-        quantity.reduceOrderQuantity(decreaseQuantity);
+        quantity.reduceOrderQuantity(reduceQuantityCounter);
 
         //then
         assertAll(
@@ -84,13 +85,29 @@ class QuantityTest {
         );
     }
 
+    @ParameterizedTest(name = "주문 개수 검증 시 예외 발생 테스트 : {0}개 주문")
+    @ValueSource(ints = {21, 22, 23, 24, 25})
+    @DisplayName("주문 개수 검증 시 보유 재고 초과 예외 발생")
+    void givenQuantity_WhenInspectionOrderCount_ThenThrowError(int decreaseQuantity) {
+        QuantityCounter reduceQuantityCounter = new QuantityCounter(decreaseQuantity);
+
+        var illegalArgumentException = assertThrows(IllegalArgumentException.class,
+                () -> quantity.inspectionOrderCount(reduceQuantityCounter), "재고가 부족할 때 예외가 발생하지 않았습니다.");
+
+        assertEquals(ErrorMessage.INSUFFICIENT_INVENTORY_NUMBER_PURCHASED.getMessage(),
+                illegalArgumentException.getMessage());
+    }
+
     @ParameterizedTest(name = "총 재고 부족 시 예외 발생 테스트 : {0}개 주문")
     @ValueSource(ints = {21, 22, 23, 24, 25})
     @DisplayName("총 재고 부족 시 예외 발생")
     void givenQuantityWhenDecreaseOverTotalQuantityThenThrowError(int decreaseQuantity) {
-        var illegalArgumentException = assertThrows(IllegalArgumentException.class,
-                () -> quantity.reduceOrderQuantity(decreaseQuantity), "재고가 부족할 때 예외가 발생하지 않았습니다.");
+        QuantityCounter reduceQuantityCounter = new QuantityCounter(decreaseQuantity);
 
-        assertEquals(ErrorMessage.INSUFFICIENT_INVENTORY_NUMBER_PURCHASED.getMessage(), illegalArgumentException.getMessage());
+        var illegalArgumentException = assertThrows(IllegalArgumentException.class,
+                () -> quantity.reduceOrderQuantity(reduceQuantityCounter), "재고가 부족할 때 예외가 발생하지 않았습니다.");
+
+        assertEquals(ErrorMessage.INSUFFICIENT_INVENTORY_NUMBER_PURCHASED.getMessage(),
+                illegalArgumentException.getMessage());
     }
 }
