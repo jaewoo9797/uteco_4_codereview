@@ -58,4 +58,12 @@ public class Quantity {
     public int getNonPromotionQuantity() {
         return nonPromotionQuantity.getQuantity();
     }
+
+    public String toStringPromotionQuantity() {
+        return promotionQuantity.toString();
+    }
+
+    public String toStringNonPromotionQuantity() {
+        return nonPromotionQuantity.toString();
+    }
 }

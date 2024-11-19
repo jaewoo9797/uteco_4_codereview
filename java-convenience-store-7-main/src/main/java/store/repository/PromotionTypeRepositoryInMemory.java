@@ -39,14 +39,13 @@ public class PromotionTypeRepositoryInMemory implements PromotionTypeRepository 
 
     private void initStore() {
         try (var lines = Files.lines(Paths.get(PROMOTIONS_DIRECTORY))) {
-            lines.skip(1) // 헤더 줄 건너뛰기
+            lines.skip(1)
                     .forEach(this::processLine);
         } catch (IOException e) {
             throw new RuntimeException("[ERROR] 파일 읽기 오류: " + PROMOTIONS_DIRECTORY, e);
         }
     }
 
-    // 한 줄의 데이터를 처리하는 메서드
     private void processLine(String line) {
         try {
             PromotionType promotionType = parsePromotionType(line);
@@ -56,7 +55,6 @@ public class PromotionTypeRepositoryInMemory implements PromotionTypeRepository 
         }
     }
 
-    // 한 줄의 데이터를 파싱하여 PromotionType 생성
     private PromotionType parsePromotionType(String line) {
         String[] parts = line.split(",");
         if (parts.length != 5) {
@@ -65,7 +63,6 @@ public class PromotionTypeRepositoryInMemory implements PromotionTypeRepository 
         return createPromotionType(parts);
     }
 
-    // PromotionType 객체 생성
     private PromotionType createPromotionType(String[] parts) {
         String name = parts[0].trim();
         int buy;
@@ -90,7 +87,6 @@ public class PromotionTypeRepositoryInMemory implements PromotionTypeRepository 
     }
 
     private void initDefaultPromotionTypes() {
-        // 기본 PromotionType 저장
         PromotionType defaultPromotionType = new PromotionType(
                 new PromotionTypeInfo("null", new QuantityCounter(0), new QuantityCounter(0),
                         new NonPromotionCalculator()),

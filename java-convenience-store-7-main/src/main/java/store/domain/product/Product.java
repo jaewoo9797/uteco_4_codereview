@@ -76,4 +76,14 @@ public class Product {
     public PromotionType getPromotionType() {
         return promotionType;
     }
+
+    @Override
+    public String toString() {
+        if (promotionType.isNameNull()) {
+            return String.format("- %s %,d원 %s", productInfo.getName(), productInfo.getPrice(),
+                    quantity.toStringNonPromotionQuantity());
+        }
+        return String.format("- %s %,d원 %s %s\n- %s %,d원 %s",  productInfo.getName(), productInfo.getPrice(),
+                quantity.toStringPromotionQuantity(), promotionType.getPromotionTypeInfoName(), productInfo.getName(), productInfo.getPrice(), quantity.toStringNonPromotionQuantity());
+    }
 }

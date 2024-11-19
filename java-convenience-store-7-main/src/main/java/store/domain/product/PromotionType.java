@@ -33,7 +33,11 @@ public class PromotionType {
     }
 
     public boolean nameEqualsNull(PromotionType promotionType) {
-        String name = promotionTypeInfo.getName();
-        return promotionTypeInfo.nameEqualsNull(name);
+        return promotionType.isNameNull();
+    }
+
+    public boolean isNameNull() {
+        String promotionTypeInfoName = promotionTypeInfo.getName();
+        return promotionTypeInfoName.equals("null");
     }
 }

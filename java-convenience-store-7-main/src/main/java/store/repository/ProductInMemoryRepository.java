@@ -3,7 +3,7 @@ package store.repository;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 import store.common.ErrorMessage;
@@ -14,7 +14,7 @@ import store.dto.ProductCreateRequestDto;
 
 public class ProductInMemoryRepository implements ProductRepository {
     private static final String PRODUCTS_DIRECTORY = "src/main/resources/products.md";
-    private final Map<String, Product> store = new HashMap<>();
+    private final Map<String, Product> store = new LinkedHashMap<>();
     private final PromotionTypeRepository promotionTypeRepository;
 
     public ProductInMemoryRepository(PromotionTypeRepository promotionTypeRepository) {
@@ -66,21 +66,23 @@ public class ProductInMemoryRepository implements ProductRepository {
         Optional<Product> existingProduct = findByName(dto.name());
         PromotionType promotionType = dto.promotionType();
 
-        // (프로모션 저장) 프로모션 상품이 있을 경우
         if (existingProduct.isPresent()) {
             Product product = existingProduct.get();
             product.addNonPromotionProductQuantity(dto.quantity());
             return;
         }
 
-        // (논 프로모션 저장) 논 프로모션 상품이 등록될 경우
         if (promotionType.nameEqualsNull(dto.promotionType())) {
             QuantityCounter quantityCounter = new QuantityCounter(dto.quantity());
             save(new Product(dto, quantityCounter));
             return;
         }
-        // (프로모션 저장) 프로모션 상품이 없을 경우
         Product product = new Product(dto);
         save(product);
+    }
+
+    @Override
+    public Map<String, Product> getStore() {
+        return store;
     }
 }

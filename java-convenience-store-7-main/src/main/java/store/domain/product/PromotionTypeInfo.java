@@ -43,7 +43,5 @@ public class PromotionTypeInfo {
         return buy.calculatePlusQuantityCount(get);
     }
 
-    public boolean nameEqualsNull(String name) {
-        return name.equals("null");
-    }
+
 }

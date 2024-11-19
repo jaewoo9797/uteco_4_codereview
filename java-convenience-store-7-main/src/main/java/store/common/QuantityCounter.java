@@ -44,4 +44,12 @@ public class QuantityCounter {
     public boolean checkQuantityMoreThan(QuantityCounter quantityCounter) {
         return this.quantity >= quantityCounter.getQuantity();
     }
+
+    @Override
+    public String toString() {
+        if (quantity == 0) {
+            return "재고 없음";
+        }
+        return String.format("%d개", this.quantity);
+    }
 }
