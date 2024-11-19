@@ -34,6 +34,10 @@ public class Product {
         quantity.reduceOrderQuantity(quantityCounter);
     }
 
+    public void checkQuantityForOrder(QuantityCounter quantityCounter) {
+        quantity.inspectionOrderCount(quantityCounter);
+    }
+
     // 프로모션 상품에 추가 제공받을 수 있는지 여부를 검사한다.
     public boolean inspectionCanGetAdditionalPromotionProduct(QuantityCounter orderQuantity) {
         return promotionType.inspectionCanGetAdditionalPromotionProduct(orderQuantity);
