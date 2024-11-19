@@ -27,4 +27,13 @@ public class PromotionType {
     public int getPromotionBuyGet() {
         return promotionTypeInfo.getPromotionBuyGet();
     }
+
+    public String getPromotionTypeInfoName() {
+        return promotionTypeInfo.getName();
+    }
+
+    public boolean nameEqualsNull(PromotionType promotionType) {
+        String name = promotionTypeInfo.getName();
+        return promotionTypeInfo.nameEqualsNull(name);
+    }
 }

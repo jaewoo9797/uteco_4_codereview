@@ -1,6 +1,7 @@
 package store.domain.product;
 
 import store.common.QuantityCounter;
+import store.dto.ProductCreateRequestDto;
 
 public class Product {
 
@@ -12,6 +13,21 @@ public class Product {
         this.productInfo = productInfo;
         this.quantity = quantity;
         this.promotionType = promotionType;
+    }
+
+    public Product(ProductCreateRequestDto dto) {
+        QuantityCounter promotionQuantityCounter = new QuantityCounter(dto.quantity());
+        QuantityCounter nonPromotionQuantityCounter = new QuantityCounter(0);
+        this.productInfo = new ProductInfo(dto.name(), dto.price());
+        this.quantity = new Quantity(promotionQuantityCounter, nonPromotionQuantityCounter);
+        this.promotionType = dto.promotionType();
+    }
+
+    public Product(ProductCreateRequestDto dto, QuantityCounter quantityCounter) {
+        QuantityCounter promotionQuantityCounter = new QuantityCounter(0);
+        this.productInfo = new ProductInfo(dto.name(), dto.price());
+        this.quantity = new Quantity(promotionQuantityCounter, quantityCounter);
+        this.promotionType = dto.promotionType();
     }
 
     public void reduceProductQuantity(QuantityCounter quantityCounter) {
@@ -40,8 +56,17 @@ public class Product {
         return promotionType.getAdditionalPromotionProduct(orderQuantity);
     }
 
+    public void addNonPromotionProductQuantity(int quantity) {
+        QuantityCounter quantityCounter = new QuantityCounter(quantity);
+        this.quantity.addNonPromotionQuantity(quantityCounter);
+    }
+
     public ProductInfo getProductInfo() {
         return productInfo;
+    }
+
+    public String getProductName() {
+        return productInfo.getName();
     }
 
     public Quantity getQuantity() {
