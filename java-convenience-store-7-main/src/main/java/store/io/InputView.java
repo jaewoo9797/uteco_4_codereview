@@ -4,6 +4,7 @@ import camp.nextstep.edu.missionutils.Console;
 import java.util.ArrayList;
 import java.util.List;
 import store.common.ErrorMessage;
+import store.domain.product.Product;
 import store.dto.OrderRequestDto;
 import store.service.ProductManager;
 
@@ -42,7 +43,13 @@ public class InputView {
         return order.equals(AGREE_CHARACTER);
     }
 
+    public void paymentProcess(OrderRequestDto orderRequestDto) {
+        Product orderdProduct = productManager.findProduct(orderRequestDto);
+        // 프로모션 상품이 충분한가?
+        // 추가로 제공받을 수 있는가?
+        // 일반 결제해야하는 개수는?
 
+    }
 
     private OrderRequestDto parseOrderToDto(String order) {
         String orderInfo = order.replaceAll(PARSER_REPLACE, PARSER_SPACE);

@@ -15,6 +15,10 @@ public class ProductManager {
         this.productRepository = productRepository;
     }
 
+    public Product findProduct(OrderRequestDto orderRequestDto) {
+        return productRepository.findByName(orderRequestDto.productName()).get();
+    }
+
     public void checkQuantityForOrders(List<OrderRequestDto> orders) {
         for (OrderRequestDto order : orders) {
             Product product = productRepository.findByName(order.productName())
@@ -25,8 +29,8 @@ public class ProductManager {
         }
     }
 
-    public void checkPromotionQuantityCanProcess(OrderRequestDto order) {
-        Product product = productRepository.findByName(order.productName()).get();
-
+    public boolean checkPromotionQuantityCanProcess(OrderRequestDto order) {
+        Product product = productRepository.findByName(order.productName()).orElseThrow();
+        return product.checkPromotionQuantityCanProcess(new QuantityCounter(order.quantity()));
     }
 }

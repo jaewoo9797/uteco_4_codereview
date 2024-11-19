@@ -1,5 +1,7 @@
 package store;
 
+import java.util.List;
+import store.dto.OrderRequestDto;
 import store.io.InputView;
 import store.io.ProductPresent;
 import store.repository.ProductInMemoryRepository;
@@ -22,17 +24,17 @@ public class Application {
             ProductPresent.printGreeting();
             productPresent.printProductInfo();
 
-            application.inputOrder();
+            List<OrderRequestDto> orders = application.inputOrder();
 
         } while (inputView.enterAdditionalOrder());
     }
 
-    private void inputOrder() {
+    private List<OrderRequestDto> inputOrder() {
         while(true) {
             try {
                 var orderRequestDtos = inputView.enterOrder();
                 inputView.checkQuantityForOrders(orderRequestDtos);
-                return;
+                return orderRequestDtos;
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
